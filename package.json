@@ -1,0 +1,25 @@
+{
+  "name": "librarymanagementsystem",
+  "version": "1.0.0",
+  "description": "member management, books category, book list, print book catalog, daily read books, circulation, reminder eaither email or sms, online read pdf, responsive frontend, member panel, multilingual, book request",
+  "main": "express.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Andres",
+    "Acosta"
+  ],
+  "author": "Andres Acosta",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-csp-header": "^5.0.0",
+    "install": "^0.13.0",
+    "mongoose": "^6.1.5",
+    "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

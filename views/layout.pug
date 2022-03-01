@@ -1,0 +1,17 @@
+extends ./index.pug
+block knowledgeContent
+    div.wrap-container 
+    div( class="main-container" onclick="show()")
+     img(src="./book-shelf.jpg", alt="book shelf")
+     div#overlay
+       div(class="text fontTexto") Enjoy knowledge
+    script. 
+     function show(){
+       var container  = document.querySelector('.main-container')
+       var containerSon  = document.querySelector('.text')
+        container.classList.add('hide')
+       containerSon.style.display = "none"
+       }
+        
+        
+        

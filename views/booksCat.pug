@@ -1,0 +1,53 @@
+extends ./index.pug 
+block mainContent
+     div#categContainer
+      h3 Choose a category
+      ul#categories 
+       li(type="button", class="btn btn-autor btn-outline-info categories", onclick="addItemAuthor()") Author
+       li(type="button", class="btn btn-revista btn-outline-info categories", onclick="addItemCategory()") Category
+       li(type="button", class="btn  btn-titulo btn-outline-info categories",onclick="addItemTitle()") Title
+       li(type="button", class="btn  btn-editorial btn-outline-info categories", onclick="addItemPublisher()") Publisher
+     div
+      label(for="category_type")
+      input(class="input" type="text", name="category_type")
+      button(class="btn btn-outline-primary choice", onclick="restartItems()") Take a pick buddy! 
+     div(id="category_reveil")
+     script.
+      var categ_types = []
+      htmlCode= ''
+      var userInput = document.querySelector('.input')
+      var clase=document.getElementsByClassName('categories')
+      var testing=document.getElementById('category_reveil')
+      function addItemAuthor(){
+           categ_types.push(clase[0].textContent)
+           clase[0].classList.add("disabled")
+      }
+       function addItemCategory(){
+           categ_types.push(clase[1].textContent)
+           clase[1].classList.add("disabled")
+      }
+      function addItemTitle(){
+           categ_types.push(clase[2].textContent)
+           clase[2].classList.add("disabled")
+      }
+      function addItemPublisher(){
+           categ_types.push(clase[3].textContent)
+           clase[3].classList.add("disabled")
+      }
+      function restartItems() { 
+          fetch(`https://www.googleapis.com/books/v1/volumes?q=${userInput.value}`)
+           .then(data => {
+                return data.json()
+           })
+           .then(response => {
+               for(var i = 0; i < response.items.length; i++){
+                     var new_item_list = document.createElement("a")
+                     var new_item = document.createElement("div").appendChild(new_item_list)
+                     new_item.classList.add("div_categ_style")
+                     var item = response.items[i]
+                     document.querySelector("#category_reveil").appendChild(new_item).innerHTML += "<br>" + item.volumeInfo.title
+                }
+           })
+                
+      }
+       

@@ -1,0 +1,66 @@
+ var acumulado = []
+      var input_el = document.querySelector('.input')
+      var autorcito = document.querySelector('.btn-autor')
+      var librito = document.querySelector('.btn-libro')
+      var revistica = document.querySelector('.btn-revista')
+      var titulacho = document.querySelector('.btn-titulo')
+      var editoriale = document.querySelector('.btn-editorial')
+      var free = document.querySelector('.btn-gratis')
+      var paid = document.querySelector('.btn-pagas')
+      function agregarAutor(){ 
+           acumulado.push("Autor")
+           console.log((acumulado))
+           autorcito.classList.add("disabled")
+      }
+      function agregarLibro(){ 
+           acumulado.push("Libro")
+           console.log(acumulado)
+           librito.classList.add("disabled")
+      }
+      function agregarCategoria(){ 
+           acumulado.push("Categoria")
+           console.log((acumulado))
+           revistica.disabled = true
+      }
+      function agregarTitulo(){ 
+           acumulado.push("Titulo")
+           console.log((acumulado))
+           titulacho.disabled = true
+      }
+      function agregarEditorial(){ 
+           acumulado.push("Editorial")
+           console.log((acumulado))
+           editoriale.disabled = true
+      }
+      function agregarFree(){ 
+           acumulado.push("Gratis")
+           console.log((acumulado))
+           free.disabled = true
+      }
+     
+      function restartItems(){
+           autorcito.disabled = false
+           librito.disabled = false
+           revistica.disabled = false
+           titulacho.disabled = false
+           editoriale.disabled = false
+           free.disabled = false
+           console.log(acumulado)
+           fetch(`https://www.googleapis.com/books/v1/volumes?q=${input_el.value}`)
+           .then(data => {
+                return data.json()
+           })
+           .then(response => {
+                for(var i = 0; i < response.items.length; i++){
+                     var new_item_list = document.createElement("a")
+                     var new_item = document.createElement("div").appendChild(new_item_list)
+                     new_item.classList.add("div_categ_style")
+                     var item = response.items[i];
+                     document.querySelector("#category_reveil").appendChild(new_item).innerHTML += "<br>" + item.volumeInfo.title;
+                     console.log(input_el.value)
+
+
+                }
+           })
+                     
+      }     
