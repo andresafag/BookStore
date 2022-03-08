@@ -1,14 +1,15 @@
 extends ./index.pug
 block mainContent
     form(action='/userData', method="POST")
+      h3 If you are not a member fill out the info below to sign up 
       label(for='userName') Username
       input.form-control(name="userName", type='text', placeholder="Type in your username")
       label(for='email') Email
       input.form-control(name="email",type='email', placeholder="E-mail") 
       label(for='inputPassword') Password
       input#inputPassword.form-control(name="inputPassword",type='password', placeholder="Ingresa contraseña")
-      input(type="submit", value="Send" , class="btn btn-outline-light")
+      input(type="submit", value="Subscribe" , class="btn btn-outline-light")
     div(class="fontTexto")
-      p If you are not a member please click below 
-      button(class="btn btn-outline-light") Subscribe
+      p If you are a member please click below 
+      button(class="btn btn-outline-light") Happy reading
     

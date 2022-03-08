@@ -3,51 +3,94 @@ block mainContent
      div#categContainer
       h3 Choose a category
       ul#categories 
-       li(type="button", class="btn btn-autor btn-outline-info categories", onclick="addItemAuthor()") Author
-       li(type="button", class="btn btn-revista btn-outline-info categories", onclick="addItemCategory()") Category
-       li(type="button", class="btn  btn-titulo btn-outline-info categories",onclick="addItemTitle()") Title
-       li(type="button", class="btn  btn-editorial btn-outline-info categories", onclick="addItemPublisher()") Publisher
+       li(type="button", class="btn btn-autor btn-outline-info categories") Authors
+       li(type="button", class="btn  btn-titulo btn-outline-info categories") Title
+       li(type="button", class="btn  btn-editorial btn-outline-info categories") Publisher
      div
       label(for="category_type")
       input(class="input" type="text", name="category_type")
-      button(class="btn btn-outline-primary choice", onclick="restartItems()") Take a pick buddy! 
+      button(class="btn btn-outline-primary choice", onclick="Search()") Take a pick buddy! 
      div(id="category_reveil")
      script.
-      var categ_types = []
-      htmlCode= ''
+      var categ_types = ["hola", "man"]
+      let clase = document.getElementById('categories')
+      let liElement = document.querySelectorAll('.categories')
       var userInput = document.querySelector('.input')
-      var clase=document.getElementsByClassName('categories')
-      var testing=document.getElementById('category_reveil')
-      function addItemAuthor(){
-           categ_types.push(clase[0].textContent)
-           clase[0].classList.add("disabled")
+
+      // Pick the category
+      var categ = ''
+
+
+       function pick_categ(e){
+
+          // Disable the category button
+           liElement.forEach(Elem => {
+                Elem.classList.add("disabled")
+           })
+
+           categ = e.target.textContent
+           
+           switch(categ) {
+                case "Authors":
+                    categ = "inauthor"
+                    break;
+                case "Title":
+                    categ = "intitle"
+                    break;
+                case "Publisher":
+                    categ = "inpublisher"
+                    break;
+                default: 
+                    return null
+           }
+           
       }
-       function addItemCategory(){
-           categ_types.push(clase[1].textContent)
-           clase[1].classList.add("disabled")
-      }
-      function addItemTitle(){
-           categ_types.push(clase[2].textContent)
-           clase[2].classList.add("disabled")
-      }
-      function addItemPublisher(){
-           categ_types.push(clase[3].textContent)
-           clase[3].classList.add("disabled")
-      }
-      function restartItems() { 
-          fetch(`https://www.googleapis.com/books/v1/volumes?q=${userInput.value}`)
-           .then(data => {
+      
+      // Event listener to trigger the pick category function
+      clase.addEventListener("click", pick_categ)
+
+
+      // Function to search the books using the API
+      function Search() { 
+          fetch(`https://www.googleapis.com/books/v1/volumes?q=${categ}:${userInput.value}`)
+           .then((data) => {
                 return data.json()
            })
-           .then(response => {
-               for(var i = 0; i < response.items.length; i++){
-                     var new_item_list = document.createElement("a")
-                     var new_item = document.createElement("div").appendChild(new_item_list)
-                     new_item.classList.add("div_categ_style")
-                     var item = response.items[i]
-                     document.querySelector("#category_reveil").appendChild(new_item).innerHTML += "<br>" + item.volumeInfo.title
-                }
+           .then((response) => {
+                categ = categ.toLowerCase()
+
+                // Takes off the disabled state
+                liElement.forEach(Elem => {
+                Elem.classList.toggle("disabled")
            })
-                
+                 // Get #category_reveil
+                let category_reveil = document.querySelector("#category_reveil")
+                    
+                    
+                // Clear #category_reveil
+                category_reveil.innerHTML = ""
+               
+                // Process the response
+                response.items.forEach(item => {
+                     console.log(item.volumeInfo.title)
+
+                     // Create the anchor and its text
+                     let a = document.createElement("a");
+                     a.innerText = item.volumeInfo.title
+                     console.log(a)
+
+                     // Create the div and its class
+                     let div = document.createElement("div");
+                     div.classList.add("div_categ_style");
+
+                     // Append a to div
+                     div.appendChild(a)
+                     // Append div to #category_reveil
+                     category_reveil.appendChild(div)  
+
+                     
+                     
+               })             
+           })               
       }
        

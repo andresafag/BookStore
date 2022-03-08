@@ -1,14 +1,16 @@
-// IMPORTING THE MODULES TO WORK WITH THEM
+// IMPORTING EXPRESS
 const express = require('express');
 const app  = express();
 
 // PORT 8000 BY DEFAULT
 let port = process.env. port || 8000;
+
 // Parsing module
 const parser = require('body-parser')
 app.use(parser.urlencoded({ extended: true }))
 app.use(parser.json())
-// Importing the schema from mongodb
+
+// IMPORTING THE SCHEMA 
 const member = require('./mongoScheme');
 
 
@@ -19,31 +21,30 @@ app.set('view engine', 'pug');
 app.use(express.static('public'));
 
 
-// EXPRESS EXECUTES MAIN PAGE LAYOUT
+// ROUTING HANDLING
+// --
+// ---
 
+// EXPRESS EXECUTES MAIN PAGE LAYOUT
 app.get('/', function (sol, res){
     res.render("layout")
 
 });
 
-// EXPRESS REQUEST
+// EXPRESS POST REQUEST
 app.post('/userData', function(sol, res){
     
     var Member = new member({
-         userName:sol.body.name,
+         userName:sol.body.userName,
           email:sol.body.email,
           passwd:sol.body.inputPassword
         
-    })
-    console.log("User data has been succesfully sent over to mongoDB...Check that out the name was ")
-
-    Member.save(function(err, doc){
+    }).save(function(err, doc){
         if(!err){ 
-            res.send("We saved your information amigo " + Member)
+            res.send("We saved your information amigo ")
             console.log(doc)
         }
-        else 
-            console.log("something went wrong")
+        
     })
    
 });
