@@ -31,9 +31,6 @@ app.get('/', function (sol, res){
 
 });
 
-function errorHandler(err){ 
-    console.log(err)
-}
 
 // EXPRESS POST REQUEST
 app.post('/userData', function(sol, res){
@@ -43,14 +40,16 @@ app.post('/userData', function(sol, res){
           email:sol.body.email,
           passwd:sol.body.inputPassword
         
-    }).save(function(err,doc){
-        if(err){
-            console.log(err)
-        }
-      
     })
     
-   
+    Member.save(function(err,doc){
+        if(err) console.log("errorsito")
+        console.log("successfully saved")
+        
+    });
+
+    res.send("Get it!!1")
+    console.log(sol.body.userName.length)
 });
 
 // MEMBERS SECTION EXECUTION

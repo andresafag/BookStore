@@ -16,14 +16,17 @@ var memberScheme = mongoose.Schema({
         type: String,
         minLength: [4, "Not long enough"],
         required: [true, "Why not putting the username"],
-        minLength: [5, "We need a long username please"]
     },
     email: {
         type: String,
         required: [true, "We need an email"],
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/]
     },
-    passwd: String
+    passwd: {
+        type: String,
+        required: [true, "We need a password"],
+        
+    }
 })
 // SAVING THE SCHEMA
 const member = mongoose.model('member', memberScheme);
