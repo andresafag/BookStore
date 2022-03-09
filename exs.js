@@ -31,6 +31,10 @@ app.get('/', function (sol, res){
 
 });
 
+function errorHandler(err){ 
+    console.log(err)
+}
+
 // EXPRESS POST REQUEST
 app.post('/userData', function(sol, res){
     
@@ -39,13 +43,13 @@ app.post('/userData', function(sol, res){
           email:sol.body.email,
           passwd:sol.body.inputPassword
         
-    }).save(function(err, doc){
-        if(!err){ 
-            res.send("We saved your information amigo ")
-            console.log(doc)
+    }).save(function(err,doc){
+        if(err){
+            console.log(err)
         }
-        
+      
     })
+    
    
 });
 

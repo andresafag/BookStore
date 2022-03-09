@@ -14,10 +14,15 @@ mongoose.connect('mongodb://localhost/usersData', function (err) {
 var memberScheme = mongoose.Schema({
     userName:  {
         type: String,
+        minLength: [4, "Not long enough"],
         required: [true, "Why not putting the username"],
         minLength: [5, "We need a long username please"]
     },
-    email: String,
+    email: {
+        type: String,
+        required: [true, "We need an email"],
+        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/]
+    },
     passwd: String
 })
 // SAVING THE SCHEMA

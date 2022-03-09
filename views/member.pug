@@ -8,8 +8,11 @@ block mainContent
       input.form-control(name="email",type='email', placeholder="E-mail") 
       label(for='inputPassword') Password
       input#inputPassword.form-control(name="inputPassword",type='password', placeholder="Ingresa contraseña")
-      input(type="submit", value="Subscribe" , class="btn btn-outline-light")
+      input(type="submit", value="Subscribe" , class="btn btn-outline-light submit")
     div(class="fontTexto")
       p If you are a member please click below 
       button(class="btn btn-outline-light") Happy reading
-    
+    script. 
+     let submitbtn = document.querySelector('.submit').addEventListener("click", function(e){
+       e.preventDefault()
+     })
